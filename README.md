@@ -6,7 +6,10 @@ PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions should be enough to get an instance of pipetaxon running in a ubuntu system. By default it have all
+ranks from NCBI and uses sqlite for database. Further instructions on how to setup pipetaxon with different databases 
+and/or custom rank settings are available later in this document.
+
 
 ### Prerequisites
 
@@ -18,10 +21,6 @@ sudo apt-get install python3-venv
 
 
 ### Installing
-
-The following steps should be enough to get an instance of pipetaxon running on ubuntu systems, by default it have all
-ranks from NCBI and uses sqlite for database. Further instructions on how to setup pipetaxon with different databases 
-and/or custom rank settings are available later in this document.
  
 
 *download the latest taxdump from ncbi* 
@@ -82,9 +81,51 @@ Add additional notes about how to deploy this on a live system
 
 ## Custom configurations 
 
-### Working with different database 
+### Working with different database
+
+SQLITE should suffice for most use cases of standalone execution of pipetaxon, but if you need an full featured RDBMS like
+postgres or mysql your can easily configure it by changing the database config in settings.py to something like this:
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'localhost',
+        'NAME': 'pipetaxon',
+        'USER': '<username>',
+        'PASSWORD': '<password>',
+    }
+}
+
+```
+
+> NOTE: You need the create (or provide) valid credential to access the database. 
 
 ### Using custom lineage
+
+By default all ranks present in NCBI will be loaded into your newly created taxonomy database, but if you want to use a custom lineage
+*(by removing ranks that do not aggregate in your project)*, you can easily define it replacing the line `VALID_RANKS = []` to something like:
+ 
+ ```
+ VALID_RANKS = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
+ ``` 
+Keep in mind that you can't change these values after building your database, if you already have one running you first
+need to clear it's data
+
+```
+./manage.py build_from_ncbi_full --clear ~/data/
+```
+
+Them run again the build process:
+
+ ```
+ ./manage.py build_from_ncbi_full --taxonomy ~/data/ 
+ ```
+ 
+ ```
+ ./manage.py build_from_ncbi_full --lineage data/
+ ``` 
+
 
 ## License
 
