@@ -103,12 +103,13 @@ DATABASES = {
 
 ### Using custom lineage
 
-By default all ranks present in NCBI will be loaded into your newly created taxonomy database, but if you want to use a custom lineage
-*(by removing ranks that do not aggregate in your project)*, you can easily define it replacing the line `VALID_RANKS = []` to something like:
+By default all ranks present in NCBI will be part of your newly created taxonomy database, if you want to use a custom lineage
+*(removing ranks that don't aggregate in your project)*, you can easily do that replacing the line `VALID_RANKS = []` to something like:
  
  ```
  VALID_RANKS = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
  ``` 
+ 
 Keep in mind that you can't change these values after building your database, if you already have one running you first
 need to clear it's data
 
