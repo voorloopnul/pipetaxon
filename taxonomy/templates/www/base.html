@@ -1,0 +1,77 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/flatly/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+    <style>
+        .modal-body{
+            height: 250px;
+            overflow-y: auto;
+        }
+
+        @media (min-height: 500px) {
+            .modal-body { height: 400px; }
+        }
+
+        @media (min-height: 800px) {
+            .modal-body { height: 600px; }
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#"><span class="text-warning">PIPE</span>TAXON</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'site-list' %}">Index <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'site-api' %}">API</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/">Admin</a>
+            </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0" action="/filter/" method="POST">
+            {% csrf_token %}
+            <select class="form-control mr-sm-2" name="rank" onchange="this.form.submit()">
+                <option value="">any rank</option>
+                {% for rank in view.rank_list %}
+                    <option value="{{ rank }}" {% if view.filters.rank == rank %} selected {% endif %}>{{ rank }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <form class="form-inline my-2 my-lg-0" action="/filter/" method="POST">
+            {% csrf_token %}
+            <select class="form-control mr-sm-2" name="division" onchange="this.form.submit()">
+                <option value="">all divisions</option>
+                {% for division in view.division_list %}
+                    <option value="{{ division.id }}" {% if view.filters.division == division.id|slugify %} selected {% endif %}>{{ division.long }}</option>
+
+                {% endfor %}
+            </select>
+        </form>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search_string">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

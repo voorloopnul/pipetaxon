@@ -1,0 +1,59 @@
+{% extends 'www/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>About</h1>
+        <p class="lead">PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be consumed by bioinformatic
+            pipelines or dataviz applications. It allows you to run your own copy of the ncbi database and gives your project stability,
+            minimizing the risks of changes in taxonomies information hosted in ncbi or - ideally - given you the control over when
+            the updates should be applied. It also supports custom lineage creation with only selected ranks, reducing the complexity
+            in your pipeline to remove undesired ranks information.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Features</h3>
+                <ul>
+                    <li>Retrieve taxonomy information by taxid <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Find taxonomy by name string <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Filter taxonomies by rank, division or parent <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Retrieve entire lineage of taxonomy by taxid <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Simple LCA endpoint <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Easy to deploy <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Supports Postgres, Mysql, SQLITE <i class="ml-2 fas fa-check text-success"></i></li>
+                    <li>Allow build database using selected classification rank<i class="ml-2 fas fa-check text-success"></i></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Rate limit</h3>
+                <p class="text-justify">Anonoymous requests to this API have a very low rate limit of 100 req/hour, and should be used only for testing
+                    and validation, if you want to use this in production certainly a higher number of requests will be required.
+                    To get a bigger limit you can signin for a token.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Support</h3>
+                <p>To get support you should ideally open issues on github or via e-mail at pipetaxon@voorloop.com</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Contributing</h3>
+                <p class="text-justify">We are always open to pull requests, but keep in mind that (for now) pipetaxon is supposed to be
+                    a generic taxonomy api for NCBI database, so if your pull request is rejected don't take it personal, maybe your changes
+                    sounded much specific and probably could live happily in a fork.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h3>Donating</h3>
+                <p class="text-justify">If you liked pipetaxon and want it to thrive, feel free to donate. All money donated is used either
+                    for feature improvements or server capability.
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="MP4YC56DP6VXC">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

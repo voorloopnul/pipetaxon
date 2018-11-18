@@ -1,0 +1,70 @@
+{% extends 'www/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>API Documentation</h1>
+        <h3>Endpoints</h3>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">GET /api/taxonomy/</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Return taxonomy information for a given taxid.</h6>
+                <p class="card-text">
+                    <b>GET parameters:</b>
+                <ul>
+                    <li>rank </li>
+                    <li>division </li>
+                    <li>search </li>
+                    <li>parent </li>
+                </ul>
+                </p>
+                <a href="{% url 'taxonomy-list' %}" class="card-link btn btn-info">Try it!</a>
+                <a href="#" class="card-link btn btn-success">Python example</a>
+                <a href="#" class="card-link btn btn-success">Curl example</a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">GET /api/taxonomy/&lt;$taxid&gt;/</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Return taxonomy information for a given taxid.</h6>
+                <p class="card-text">
+                    <b>No extra parameters!</b>
+                </p>
+                <a href="{% url 'taxonomy-detail' 356 %}" class="card-link btn btn-info">Try it!</a>
+                <a href="#" class="card-link btn btn-success">Python example</a>
+                <a href="#" class="card-link btn btn-success">Curl example</a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">GET /api/lca/</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Return the last common ancestor taxonomy entry for a list of taxids</h6>
+                <p class="card-text">
+                    <b>GET parameters:</b>
+                <ul>
+                    <li>taxid_list</li>
+                </ul>
+                </p>
+                <a href="{% url 'taxonomy-lca-list' %}?taxid_list=2363,37487,87346" class="card-link btn btn-info">Try it!</a>
+                <a href="#" class="card-link btn btn-success">Python example</a>
+                <a href="#" class="card-link btn btn-success">Curl example</a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">GET /api/taxonomy/&lt;$taxid&gt;/lineage/</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Return the entire lineage for a given taxid</h6>
+                <p class="card-text">
+                    <b>No extra parameters!</b>
+                </p>
+                <a href="{% url 'taxonomy-lineage' 356 %}" class="card-link btn btn-info">Try it!</a>
+                <a href="#" class="card-link btn btn-success">Python example</a>
+                <a href="#" class="card-link btn btn-success">Curl example</a>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5"></div>
+
+{% endblock %}

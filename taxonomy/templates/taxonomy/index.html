@@ -1,0 +1,133 @@
+{% extends 'www/base.html' %}
+{% block content %}
+<div class="container-fluid">
+
+    <table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th scope="col"># TaxId</th>
+            <th scope="col"># Rank</th>
+            <th scope="col"># Taxonomy/Division</th>
+            <th><span class="badge badge-info">S</span></th>
+            <th><span class="badge badge-info">G</span></th>
+            <th><span class="badge badge-warning">F</span></th>
+            <th><span class="badge badge-danger">O</span></th>
+            <th><span class="badge badge-success">C</span></th>
+            <th><span class="badge badge-dark">P</span></th>
+            <th><span class="badge badge-secondary">K</span></th>
+            <th><span class="badge badge-secondary">SK</span></th>
+            <th></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for taxonomy in object_list %}
+            <tr>
+                <td><a href="">{{ taxonomy.taxid }}</a></td>
+                <td>{{ taxonomy.rank }}</td>
+                <td><span class="text-warning">{{ taxonomy.name }}</span>
+                    <span class="badge badge-light">
+                        {{ taxonomy.division.long }}
+                    </span>
+                </td>
+                <td>{% if taxonomy.species %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>{% if taxonomy.genus %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>{% if taxonomy.family %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>{% if taxonomy.order %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>{% if taxonomy.klass %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>{% if taxonomy.phylum %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td>
+                    {% if taxonomy.kingdom %}
+                        <i class="fas fa-check"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if taxonomy.superkingdom %}
+                        <i class="fas fa-check"></i>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taxid_{{ taxonomy.taxid }}">
+                        Lineage (full)
+                    </button>
+
+                    <div class="modal fade" id="taxid_{{ taxonomy.taxid }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><i>Lineage for</i> <b>{{ taxonomy.name }}</b></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-striped">
+                                        {% for taxonomy in taxonomy.lineage %}
+                                            <tr>
+                                                <td>{{ taxonomy.taxid }}</td>
+                                                <td>{{ taxonomy.rank }}</td>
+                                                <td>{{ taxonomy.name }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col">
+            <div class="mx-auto w-75 p-3 _bg-light text-white text-center">
+                {% if is_paginated %}
+                    <ul class="pagination pagination-lg">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="page-item disabled"> <a class="page-link" href="#" tabindex="-1">&laquo;</a> </li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+
+                            {% if page_obj.number < 10 %}
+                                {% if forloop.counter < 20 %}
+                                    {% if page_obj.number == i %}
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endif %}
+                            {% elif forloop.counter < page_obj.number|add:"10" and forloop.counter > page_obj.number|add:"-10"  %}
+                                {% if page_obj.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+                                    </li>
+
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
