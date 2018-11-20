@@ -30,7 +30,7 @@ sudo apt-get install python3-venv
 
 *decompress it*
  ```
- tar -zxvf taxdump.tar.gz ~/data
+ mkdir ~/data/ && tar -zxvf taxdump.tar.gz -C ~/data/
  ```
 
 *clone this repository* 
@@ -50,7 +50,7 @@ sudo apt-get install python3-venv
 
 *enter the virtualenv*
  ```
- source ~/venv/pipetaxon
+ source ~/venv/pipetaxon/bin/activate
  ```
 
 *install the requirements* 
@@ -70,7 +70,7 @@ sudo apt-get install python3-venv
  
 *build lineage*
  ```
- ./manage.py build_from_ncbi_full --lineage data/
+ ./manage.py build_from_ncbi_full --lineage ~/data/
  ``` 
 
  > The --lineage command took 25 minutes and the --taxonomy 3 minutes in my I5 laptop
@@ -131,5 +131,3 @@ Them run again the build process:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-
