@@ -25,12 +25,12 @@ sudo apt-get install python3-venv
 
 *download the latest taxdump from ncbi* 
  ```
- wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
+ wget https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz
  ```
 
 *decompress it*
  ```
- mkdir ~/data/ && tar -zxvf taxdump.tar.gz -C ~/data/
+ mkdir ~/data/ && tar -zxvf new_taxdump.tar.gz -C ~/data/
  ```
 
 *clone this repository* 
