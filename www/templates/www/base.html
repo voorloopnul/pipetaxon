@@ -35,19 +35,19 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item {% if request.get_full_path == '/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'site-list' %}">Index <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.get_full_path == '/features/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'site-features' %}">Features</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.get_full_path == '/api/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'site-api' %}">API</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="http://github.com/voorloopnul/pipetaxon">Download</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if request.get_full_path == '/register/' %}active{% endif %}">
                 <a class="nav-link text-warning" href="{% url 'site-register' %}">Get Token!</a>
             </li>
         </ul>
