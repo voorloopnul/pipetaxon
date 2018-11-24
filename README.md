@@ -114,17 +114,17 @@ Keep in mind that you can't change these values after building your database, if
 need to clear it's data
 
 ```
-./manage.py build_from_ncbi_full --clear ~/data/
+./manage.py build_database --clear ~/data/
 ```
 
 Them run again the build process:
 
  ```
- ./manage.py build_from_ncbi_full --taxonomy ~/data/ 
+ ./manage.py build_database --taxonomy ~/data/ 
  ```
  
  ```
- ./manage.py build_from_ncbi_full --lineage data/
+ ./manage.py build_database --lineage ~/data/
  ``` 
 
 
