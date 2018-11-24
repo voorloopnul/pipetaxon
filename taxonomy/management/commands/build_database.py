@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
         while True:
             taxonomy_object_list = []
-            next_n_lines = list(islice(reader, 400000))
+            next_n_lines = list(islice(reader, 100000))
             if not next_n_lines:
                 break
 

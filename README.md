@@ -65,12 +65,12 @@ sudo apt-get install python3-venv
 
 *build taxonomy database*
  ```
- ./manage.py build_from_ncbi_full --taxonomy ~/data/
+ ./manage.py build_database --taxonomy ~/data/
  ```
  
 *build lineage*
  ```
- ./manage.py build_from_ncbi_full --lineage ~/data/
+ ./manage.py build_database --lineage ~/data/
  ``` 
 
  > The --lineage command took 25 minutes and the --taxonomy 3 minutes in my I5 laptop
