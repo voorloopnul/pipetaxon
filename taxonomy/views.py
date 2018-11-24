@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import ListView
 from pipetaxon.settings import VALID_RANKS
-from taxonomy.models import Taxonomy, Division
+from taxonomy.models import Taxonomy, Division, ALL_RANKS
 
 
 class Index(ListView):
@@ -43,7 +43,7 @@ class Index(ListView):
 
     @property
     def rank_list(self):
-        return VALID_RANKS
+        return VALID_RANKS if VALID_RANKS else ALL_RANKS
 
 
 def api(request):

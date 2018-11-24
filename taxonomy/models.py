@@ -1,46 +1,11 @@
 from django.db import models
 from django.utils.functional import cached_property
 
-
-DIVISION = (
-    (0, "BCT"),   # Bacteria
-    (1, "INV"),   # Invertebrates
-    (2, "MAM"),   # Mammals
-    (3, "PHG"),   # Phages
-    (4, "PLN"),   # Plants and Fungi
-    (5, "PRI"),   # Primates
-    (6, "ROD"),   # Rodents
-    (7, "SYN"),   # Synthetic and Chimeric
-    (8, "UNA"),   # Unassigned
-    (9, "VRL"),   # Viruses
-    (10, "VRT"),  # Vertebrates
-    (11, "ENV"),  # Environmental Samples
-)
-
-RANK = (
-    (0, "no rank"),
-    (1, "superkingdom"),
-    (2, "kingdom"),
-    (3, "phylum"),
-    (4, "class"),
-    (5, "order"),
-    (6, "family"),
-    (7, "genus"),
-    (8, "species"),
-
-)
-
-
-def rank_container():
-    return {
-        "kingdom": None,
-        "phylum": None,
-        "class": None,
-        "order": None,
-        "family": None,
-        "genus": None,
-        "species": None
-    }
+ALL_RANKS = ['no rank', 'superkingdom', 'kingdom', 'subkingdom', 'superphylum', 'phylum', 'subphylum', 'genus',
+             'subspecies', 'subtribe', 'class', 'parvorder', 'tribe', 'varietas', 'subfamily', 'suborder', 'subclass',
+             'superfamily', 'order', 'infraorder', 'cohort', 'superorder', 'forma', 'superclass', 'species group',
+                'species', 'infraclass', 'family', 'species subgroup', 'subgenus'
+            ]
 
 
 class Division(models.Model):
