@@ -81,7 +81,8 @@ class Command(BaseCommand):
         Division.objects.all().delete()
 
     def build_lineage(self, path):
-        lookup_table = self._build_names_dict(path)
+        Taxonomy.objects.get_or_create(taxid=1, rank='no rank', division_id=8, name='root')
+        lookup_table = {x: i for i, x in enumerate(Taxonomy.objects.all().values_list('taxid', flat=True))}
         reader = csv.reader(open(join(path, "taxidlineage.dmp")), delimiter="\t")  # has 1879344 entries
         total = 0
         taxonomies_to_update = (Taxonomy.objects.filter().count())
@@ -92,11 +93,14 @@ class Command(BaseCommand):
                 if taxid in lookup_table:
                     lineage = lineage.split(" ")
                     if lineage != ['']:
-                        parent = int(lineage[-2])
-                        while parent not in lookup_table:
-                            parent = int(lineage.pop())
+                        parent = 1
+                        lineage.reverse()
+                        for _parent in lineage:
+                            if _parent.isdigit():
+                                if int(_parent) in lookup_table:
+                                    parent = _parent
+                                    break
                         Taxonomy.objects.filter(taxid=taxid).update(parent_id=parent)
-
                         total += 1
                         sys.stdout.write("\r -> Progress: {0:.1f}%".format((total / taxonomies_to_update) * 100))
                         sys.stdout.flush()
