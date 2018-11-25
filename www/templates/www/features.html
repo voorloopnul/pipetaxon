@@ -2,11 +2,11 @@
 {% block content %}
     <div class="container">
         <h1>About</h1>
-        <p class="lead">PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be consumed by bioinformatic
-            pipelines or dataviz applications. It allows you to run your own copy of the ncbi database and gives your project stability,
-            minimizing the risks of changes in taxonomies information hosted in ncbi or - ideally - given you the control over when
-            the updates should be applied. It also supports custom lineage creation with only selected ranks, reducing the complexity
-            in your pipeline to remove undesired ranks information.</p>
+        <p class="lead text-justify">PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be consumed by bioinformatic
+            pipelines or dataviz applications. It allows you to run your own copy of the ncbi database and give your project <u>data stability</u>,
+            minimizing the risks of changes in taxonomy data hosted in ncbi and given you the control over when the updates
+            should be applied. It also supports custom lineage creation with predefined ranks, reducing the complexity
+            in your pipeline to handle/remove undesired rank data.</p>
         <div class="row">
             <div class="col-md-6">
                 <h3>Features</h3>
@@ -23,21 +23,25 @@
             </div>
             <div class="col-md-6">
                 <h3>Rate limit</h3>
-                <p class="text-justify">Anonoymous requests to this API have a very low rate limit of 100 req/hour, and should be used only for testing
-                    and validation, if you want to use this in production certainly a higher number of requests will be required.
-                    To get a bigger limit you can signin for a token.</p>
+                <p class="text-justify">
+                    Anonymous requests to this API have a very low rate limit of 100 req/hour and should be used only for
+                    testing and validation, if you want to consume the API in production you can overcome this low rate
+                    limit by <a href="/register/">getting a token</a> or running a <a href="http://github.com/voorloopnul/pipetaxon">self hosted version</a> of PipeTaxon.
+                </p>
+
+
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <h3>Support</h3>
-                <p>To get support you should ideally open issues on github or via e-mail at pipetaxon@voorloop.com</p>
+                <p>To get support you can open an issue on github or send an e-mail to pipetaxon@voorloop.com</p>
             </div>
             <div class="col-md-4">
                 <h3>Contributing</h3>
                 <p class="text-justify">We are always open to pull requests, but keep in mind that (for now) pipetaxon is supposed to be
                     a generic taxonomy api for NCBI database, so if your pull request is rejected don't take it personal, maybe your changes
-                    sounded much specific and probably could live happily in a fork.
+                    sounded too much specific and probably could live happily in a fork.
                 </p>
             </div>
             <div class="col-md-4">
