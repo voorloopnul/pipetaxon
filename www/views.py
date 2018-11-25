@@ -2,6 +2,8 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
+from .forms import GetTokenForm
+from .models import send_email_with_token
 
 User = get_user_model()
 
@@ -11,17 +13,21 @@ def features(request):
 
 
 def request_token(request):
-    User.objects.all().delete()
-    email = request.POST.get('email', None)
-    email_confirm = request.POST.get('email-confirm', None)
+    form = GetTokenForm()
+    if request.POST:
+        form = GetTokenForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
 
-    if email == email_confirm and email:
-        user, created = User.objects.get_or_create(username=email, password=uuid.uuid4().hex)
-        if user:
-            token = Token.objcts.get_or_create(user=user)
-            token.key = None  # renew token for every request
-            token.save()
-    else:
-        pass
+            try:
+                user = User.objects.get(username=email)
+            except User.DoesNotExist:
+                user = User.objects.create(username=email, password=uuid.uuid4().hex)
 
-    return render(request, 'www/register.html', {})
+            token, created = Token.objects.get_or_create(user=user)
+            if not created:
+                token.delete()
+                token = Token.objects.create(user=user)
+            send_email_with_token(email, token)
+
+    return render(request, 'www/register.html', {'form': form})
