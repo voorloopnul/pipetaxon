@@ -3,8 +3,12 @@
     <div class="container">
         <h1>Request a Token</h1>
         <div class="lead">With a token associated to your e-mail account you will get a higher number of API calls per hour.</div>
+        {% if msg %}
+            <div class="alert alert-success">
+            {{ msg }}
+            </div>
+        {% endif %}
         <form action="" method="POST">
-
             {% csrf_token %}
             <div class="form-group">
                 <label for="emailForToken">Email address</label>
