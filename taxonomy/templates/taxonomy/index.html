@@ -8,14 +8,14 @@
             <th scope="col"># TaxId</th>
             <th scope="col"># Rank</th>
             <th scope="col"># Taxonomy/Division</th>
-            <th><span class="badge badge-info">S</span></th>
-            <th><span class="badge badge-info">G</span></th>
-            <th><span class="badge badge-warning">F</span></th>
-            <th><span class="badge badge-danger">O</span></th>
-            <th><span class="badge badge-success">C</span></th>
-            <th><span class="badge badge-dark">P</span></th>
-            <th><span class="badge badge-secondary">K</span></th>
-            <th><span class="badge badge-secondary">SK</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-info">S</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-info">G</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-warning">F</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-danger">O</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-success">C</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-dark">P</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-secondary">K</span></th>
+            <th class="d-none d-sm-table-cell"><span class="badge badge-secondary">SK</span></th>
             <th></th>
 
         </tr>
@@ -30,22 +30,14 @@
                         {{ taxonomy.division.long }}
                     </span>
                 </td>
-                <td>{% if taxonomy.species %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>{% if taxonomy.genus %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>{% if taxonomy.family %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>{% if taxonomy.order %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>{% if taxonomy.klass %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>{% if taxonomy.phylum %}<i class="fas fa-check"></i>{% endif %}</td>
-                <td>
-                    {% if taxonomy.kingdom %}
-                        <i class="fas fa-check"></i>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if taxonomy.superkingdom %}
-                        <i class="fas fa-check"></i>
-                    {% endif %}
-                </td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.species %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.genus %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.family %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.order %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.klass %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.phylum %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.kingdom %}<i class="fas fa-check"></i>{% endif %}</td>
+                <td class="d-none d-sm-table-cell">{% if taxonomy.superkingdom %}<i class="fas fa-check"></i>{% endif %}</td>
 
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taxid_{{ taxonomy.taxid }}">
