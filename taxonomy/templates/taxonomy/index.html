@@ -85,34 +85,21 @@
         </tbody>
     </table>
 
-    <div class="row">
-        <div class="col">
-            <div class="mx-auto w-75 p-3 _bg-light text-white text-center">
-                {% if is_paginated %}
-                    <ul class="pagination pagination-lg">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-                        {% else %}
-                            <li class="page-item disabled"> <a class="page-link" href="#" tabindex="-1">&laquo;</a> </li>
-                        {% endif %}
-                        {% for i in paginator.page_range|slice:view.pagination_slice %}
-                            {% if page_obj.number == i %}
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
-                                </li>
-                            {% else %}
-                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-                        {% else %}
-                            <li class="page-item disabled"><span>&raquo;</span></li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
-
-            </div>
+    <div class="row justify-content-center">
+        <div class="col-auto d-none d-xl-block">
+            {% include "taxonomy/pagination_snippet.html" with offset=8 %}
+        </div>
+        <div class="col-auto d-none d-lg-block d-xl-none">
+            {% include "taxonomy/pagination_snippet.html" with offset=6 %}
+        </div>
+        <div class="col-auto d-none d-md-block d-lg-none">
+            {% include "taxonomy/pagination_snippet.html" with offset=4 %}
+        </div>
+        <div class="col-auto d-none d-sm-block d-md-none">
+            {% include "taxonomy/pagination_snippet.html" with offset=2 %}
+        </div>
+        <div class="col-auto d-none d-xs-block d-sm-none">
+            {% include "taxonomy/pagination_snippet.html" with offset=1 %}
         </div>
     </div>
 </div>

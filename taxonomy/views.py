@@ -22,17 +22,6 @@ class Index(ListView):
         queryset = Taxonomy.objects.filter(**filters)
         return queryset
 
-    def pagination_slice(self):
-        current_page_number = self.get_context_data()['page_obj'].number
-        lower = current_page_number - 9
-        higher = current_page_number + 9
-
-        if lower < 0:
-            lower = 0
-            higher = 18
-
-        return "{0}:{1}".format(lower, higher)
-
     @property
     def filters(self):
         return {'rank': self.request.session.get('rank', None), 'division': self.request.session.get('division', None)}
