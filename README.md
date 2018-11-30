@@ -4,6 +4,21 @@ PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be 
 
 ![alt text](https://i.imgur.com/A7Vxzq9.png)
 
+## Getting Started (the easier way)
+
+We have packaged pipetaxon as a docker container, you should be able to get it up effortless by simply running the cmd:
+
+ > docker pull voorloop/pipetaxon && docker run --rm -p **80**:8000 voorloop/pipetaxon
+ 
+The bold **80** is to run it on default HTTP port, if it's already in use or you don't have permission you can simply change it for any other port:
+ 
+ > docker pull voorloop/pipetaxon && docker run --rm -p **81**:8000 voorloop/pipetaxon
+
+Then go ahead to your browser and type:
+
+ > `http://localhost` (when you choose port 80) or `http://localhost:81` (or any other port you have chosen)
+
+
 ## Getting Started
 
 These instructions should be enough to get an instance of pipetaxon running in a ubuntu system. By default it have all
