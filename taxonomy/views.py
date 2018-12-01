@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import ListView
 from pipetaxon.settings import VALID_RANKS
@@ -11,20 +10,26 @@ class Index(ListView):
     paginate_by = 19
 
     def get_queryset(self):
-        division = self.request.session.get('division', None)
-        rank = self.request.session.get('rank', None)
+        division = self.request.GET.get('division', None)
+        rank = self.request.GET.get('rank', None)
+        search_string = self.request.GET.get('search_string', None)
         filters = {}
+
         if division:
             filters['division'] = division
+
         if rank:
             filters['rank'] = rank
+
+        if search_string:
+            filters['name__contains'] = search_string
 
         queryset = Taxonomy.objects.filter(**filters)
         return queryset
 
     @property
     def filters(self):
-        return {'rank': self.request.session.get('rank', None), 'division': self.request.session.get('division', None)}
+        return {'rank': self.request.GET.get('rank', None), 'division': self.request.GET.get('division', None)}
 
     @property
     def division_list(self):
@@ -37,13 +42,3 @@ class Index(ListView):
 
 def api(request):
     return render(request, 'taxonomy/api.html', {})
-
-
-def apply_filter(request):
-    if 'division' in request.POST:
-        request.session['division'] = request.POST.get('division', None)
-    elif 'rank' in request.POST:
-        request.session['rank'] = request.POST.get('rank', None)
-    else:
-        print("reset filters")
-    return HttpResponseRedirect("/")

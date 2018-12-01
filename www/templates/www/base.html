@@ -52,18 +52,15 @@
                 <a class="nav-link text-warning" href="{% url 'site-register' %}">Get Token!</a>
             </li>
         </ul>
-        {% if taxonomy_list.exists %}
-            <form class="form-inline my-2 my-lg-0" action="/filter/" method="POST">
-                {% csrf_token %}
+        {% if view.filters %}
+            <form class="form-inline my-2 my-lg-0" action="." method="GET">
                 <select class="form-control mr-sm-2" name="rank" onchange="this.form.submit()">
                     <option value="">any rank</option>
                     {% for rank in view.rank_list %}
                         <option value="{{ rank }}" {% if view.filters.rank == rank %} selected {% endif %}>{{ rank }}</option>
                     {% endfor %}
                 </select>
-            </form>
-            <form class="form-inline my-2 my-lg-0" action="/filter/" method="POST">
-                {% csrf_token %}
+
                 <select class="form-control mr-sm-2" name="division" onchange="this.form.submit()">
                     <option value="">all divisions</option>
                     {% for division in view.division_list %}
@@ -71,10 +68,10 @@
 
                     {% endfor %}
                 </select>
-            </form>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search_string">
+
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search_string" value="{{ request.GET.search_string }}">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <a href="/" class="btn btn-warning my-2 my-sm-0 ml-2" type="submit">Clear</a>
             </form>
         {% endif %}
     </div>
