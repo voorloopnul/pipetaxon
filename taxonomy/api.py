@@ -12,10 +12,18 @@ class TaxonomyViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TaxonomySerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
     filter_fields = ('rank', 'division',)
-    search_fields = ('name',)
+    search_fields = ('name', 'taxid',)
 
     def get_queryset(self):
-        return Taxonomy.objects.all()
+        """
+        `?parent` filter was implemented outside django filters to avoid the data overload in Browsable API due high
+        number of parents loaded into filter widget.
+        """
+        filters = {}
+        parent = self.request.GET.get('parent', None)
+        if parent:
+            filters['parent_id'] = parent
+        return Taxonomy.objects.filter(**filters)
 
     @action(detail=True, methods=['get'])
     def lineage(self, request, pk=None):
