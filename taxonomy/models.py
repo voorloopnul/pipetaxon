@@ -13,6 +13,9 @@ class Division(models.Model):
     short = models.CharField(max_length=3)
     long = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.long
+
 
 class Taxonomy(models.Model):
     class Meta:
