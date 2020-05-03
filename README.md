@@ -4,18 +4,40 @@ PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be 
 
 ![alt text](https://i.imgur.com/A7Vxzq9.png)
 
-## Getting Started (the easier way)
+## Getting Started (the super easy way)
+
+Just open a terminal and copy&paste the following command:
+```
+curl https://raw.githubusercontent.com/voorloopnul/pipetaxon/master/install/install.sh | bash
+```
+
+```
+pipetaxon install
+```
+
+```
+pipetaxon start
+```
+
+> Go to your browser and type: http://localhost:8888
+       
+## Getting Started (the easy way)
 
 We have packaged pipetaxon as a docker container, you should be able to get it up effortless by simply running the following commands:
 
+```
+docker pull voorloop/pipetaxon
+```
 
- > docker pull voorloop/pipetaxon
- 
- > docker run -p **80**:8000 voorloop/pipetaxon
- 
+```
+docker run -p **80**:8000 voorloop/pipetaxon
+```
+
 if the default HTTP port is already in use or you don't have permission you can simply change it for any other port:
  
- > docker run -p **81**:8000 voorloop/pipetaxon
+```
+docker run -p **81**:8000 voorloop/pipetaxon
+```
 
 Then go ahead to your browser and type:
 
@@ -93,9 +115,23 @@ sudo apt-get install python3-venv
 
  > The --lineage command took 25 minutes and the --taxonomy 3 minutes in my I5 laptop
 
-## Deployment
+## Adding the accession data (optional)
 
-Add additional notes about how to deploy this on a live system
+The accession data is quite large, if you need to get all the data SQLite probably will not handle it very well.
+We have tested `nucl_gb.accession2taxid.gz` with SQLite, the database got 11GB and took one hour to add all the 266 millions of accession IDs in this file.
+
+
+ ```
+ https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
+ ```
+
+ ```
+ mkdir ~/data/ && tar -zxvf nucl_gb.accession2taxid.gz -C ~/data/
+ ```
+
+ ```
+ ./manage.py build_database --accession ~/data/
+ ```
 
 ## Custom configurations 
 
@@ -148,4 +184,4 @@ Them run again the build process:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
