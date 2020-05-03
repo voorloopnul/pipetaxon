@@ -1,10 +1,11 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.exceptions import NotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 
-from taxonomy.models import Taxonomy
+from taxonomy.models import Taxonomy, Accession
 from taxonomy.serializers import TaxonomySerializer, NestedTaxonomySerializer
 
 
@@ -32,6 +33,24 @@ class TaxonomyViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class AccessionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = TaxonomySerializer
+    queryset = Accession.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        taxonomy = instance.get_taxonomy_instance()
+
+        if not taxonomy:
+            raise NotFound()
+        else:
+            serializer = self.get_serializer(taxonomy)
+            return Response(serializer.data)
+
+    def list(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
 class LCAView(viewsets.ViewSet):
 
     def list(self, request, pk=None):
@@ -49,6 +68,7 @@ class LCAView(viewsets.ViewSet):
                 break
 
         if len(values) != 1:
-            return Response("Not found")
+            raise NotFound()
 
-        return Response(values[0].taxid)
+        serializer = TaxonomySerializer(values[0])
+        return Response(serializer.data)

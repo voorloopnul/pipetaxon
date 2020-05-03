@@ -6,7 +6,7 @@ from itertools import islice
 from django.core.management import BaseCommand
 from django.db import transaction
 from pipetaxon.settings import VALID_RANKS
-from taxonomy.models import Taxonomy, Division
+from taxonomy.models import Taxonomy, Division, Accession
 
 
 class Command(BaseCommand):
@@ -17,6 +17,7 @@ class Command(BaseCommand):
         parser.add_argument('--clear', action='store_true', dest='clear', default=False, help='Missing help',)
         parser.add_argument('--lineage', action='store_true', dest='lineage', default=False, help='Missing help',)
         parser.add_argument('--taxonomy', action='store_true', dest='taxonomy', default=False, help='Missing help',)
+        parser.add_argument('--accession', action='store_true', dest='accession', default=False, help='Missing help',)
 
     def _build_names_dict(self, path):
         """
@@ -79,6 +80,8 @@ class Command(BaseCommand):
         Taxonomy.objects.all().delete()
         print("Removing all division entries...")
         Division.objects.all().delete()
+        print("Removing all accession entries...")
+        Accession.objects.all().delete()
 
     def build_lineage(self, path):
         Taxonomy.objects.get_or_create(taxid=1, rank='no rank', division_id=8, name='root')
@@ -107,10 +110,36 @@ class Command(BaseCommand):
 
         Taxonomy.objects.filter(parent=None).update(parent_id=1)
 
+    def build_accession(self, path):
+        reader = csv.reader(open(join(path, "nucl_gb.accession2taxid")), delimiter="\t")
+        next(reader)
+
+        bulk = []
+        count = 0
+        for line in reader:
+            accession = line[0]
+            taxid = int(line[2])
+            bulk.append(Accession(taxonomy=taxid, accession=accession))
+            if len(bulk) == 1000000:
+                count +=1
+                Accession.objects.bulk_create(bulk)
+                bulk = []
+                sys.stdout.write(f"\r -> Progress: {count}/266")
+                sys.stdout.flush()
+        Accession.objects.bulk_create(bulk)
+
+    def vacuum_sqlite(self):
+        from django.db import connection, transaction
+        cursor = connection.cursor()
+        cursor.execute("vacuum main")
+        transaction.commit()
+        return
+
     def handle(self, *args, **options):
         path = options['path']
         lineage = options['lineage']
         taxonomy = options['taxonomy']
+        accession = options['accession']
         clear = options['clear']
 
         if taxonomy:
@@ -119,13 +148,19 @@ class Command(BaseCommand):
             self.build_division_table(path)
             self.build_taxonomy_base(path)
             delta = (datetime.datetime.now() - start_time).seconds
-            print("--taxonomy option took: {0}".format(delta))
+            print("--taxonomy option took: {0} seconds".format(delta))
 
         elif lineage:
             start_time = datetime.datetime.now()
             self.build_lineage(path)
             delta = (datetime.datetime.now() - start_time).seconds
-            print("--lineage option took: {0}".format(delta))
+            print("--lineage option took: {0} seconds".format(delta))
+
+        elif accession:
+            start_time = datetime.datetime.now()
+            self.build_accession(path)
+            delta = (datetime.datetime.now() - start_time).seconds
+            print("--accession option took: {0} seconds".format(delta))
 
         elif clear:
             self.clear_database()

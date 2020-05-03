@@ -4,8 +4,8 @@ from django.utils.functional import cached_property
 ALL_RANKS = ['no rank', 'superkingdom', 'kingdom', 'subkingdom', 'superphylum', 'phylum', 'subphylum', 'genus',
              'subspecies', 'subtribe', 'class', 'parvorder', 'tribe', 'varietas', 'subfamily', 'suborder', 'subclass',
              'superfamily', 'order', 'infraorder', 'cohort', 'superorder', 'forma', 'superclass', 'species group',
-                'species', 'infraclass', 'family', 'species subgroup', 'subgenus'
-            ]
+             'species', 'infraclass', 'family', 'species subgroup', 'subgenus'
+             ]
 
 
 class Division(models.Model):
@@ -19,7 +19,7 @@ class Division(models.Model):
 
 class Taxonomy(models.Model):
     class Meta:
-        ordering = ("taxid", )
+        ordering = ("taxid",)
 
     taxid = models.IntegerField(null=False, primary_key=True, auto_created=False)
     division = models.ForeignKey(Division, on_delete=models.CASCADE)
@@ -72,3 +72,14 @@ class Taxonomy(models.Model):
 
     def superkingdom(self):
         return self._check_rank('superkingdom')
+
+
+class Accession(models.Model):
+    accession = models.CharField(max_length=20, primary_key=True)
+    taxonomy = models.IntegerField()
+
+    def get_taxonomy_instance(self):
+        try:
+            return Taxonomy.objects.get(taxid=self.taxonomy)
+        except Exception as err:
+            return None

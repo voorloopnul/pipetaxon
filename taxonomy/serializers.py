@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from taxonomy.models import Taxonomy
+from taxonomy.models import Taxonomy, Accession
 
 
 class TaxonomySerializer(serializers.ModelSerializer):
