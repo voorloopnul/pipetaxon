@@ -8,7 +8,7 @@ PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be 
 
 Just open a terminal and copy&paste the following command:
 ```
-curl https://raw.githubusercontent.com/voorloopnul/pipetaxon/master/install/install.sh | bash
+curl https://raw.githubusercontent.com/voorloopnul/pipetaxon/master/install/install.sh | sudo bash
 ```
 
 ```
