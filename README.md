@@ -2,6 +2,20 @@
 
 PipeTaxon exposes the ncbi taxonomy database as a REST API. It's intended to be consumed by bioinformatic pipelines or dataviz applications.
 
+### Main featuress
+
+ - Expose the entire taxonomy database as an API
+ - Provide a web interface for human interaction
+ - Optionally can query taxonomy from accession id
+ - Retrieve entire lineage from a taxonomy id
+ - LCA endpoint (retrieve the lowest common ancestor from a list of taxonomy id) 
+ - Allow exclusion of ranks
+
+### Live demo
+
+http://pipetaxon.voorloopnul.com:8888
+
+
 ![alt text](https://i.imgur.com/A7Vxzq9.png)
 
 ## Getting Started (the super easy way)

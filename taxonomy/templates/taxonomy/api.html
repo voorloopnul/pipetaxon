@@ -35,7 +35,7 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h4 class="card-title">GET /api/taxonomy/lca/</h4>
-                <h6 class="card-subtitle mb-2 text-muted">Return the last common ancestor taxonomy entry for a list of taxids</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Return the lowest common ancestor taxonomy entry for a list of taxid</h6>
                 <p class="card-text">
                     <b>GET parameters:</b>
                 <ul>
@@ -48,12 +48,23 @@
 
         <div class="card mt-3">
             <div class="card-body">
-                <h4 class="card-title">GET /api/taxonomy/&lt;$taxid&gt;/lineage/</h4>
+                <h4 class="card-title">GET /api/taxonomy/&lt;$taxId&gt;/lineage/</h4>
                 <h6 class="card-subtitle mb-2 text-muted">Return the entire lineage for a given taxid</h6>
                 <p class="card-text">
                     <b>No extra parameters!</b>
                 </p>
                 <a href="{% url 'taxonomy-lineage' 356 %}" class="card-link btn btn-info">Try it!</a>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h4 class="card-title">GET /api/taxonomy/accession/&lt;$accessionId&gt;/</h4>
+                <h6 class="card-subtitle mb-2 text-muted">Return a taxonomy object from a given sequence accession</h6>
+                <p class="card-text">
+                    <b>No extra parameters!</b>
+                </p>
+                <a href="{% url 'taxonomy-accession-detail' 'A00484' %}" class="card-link btn btn-info">Try it!</a>
             </div>
         </div>
     </div>
