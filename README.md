@@ -20,7 +20,7 @@ http://pipetaxon.voorloopnul.com:8888
 
 ## Getting Started (the super easy way)
 
-Just open a terminal and copy&paste the following command:
+In a terminal copy and paste the following command:
 ```
 curl https://raw.githubusercontent.com/voorloopnul/pipetaxon/master/install/install.sh | sudo bash
 ```
@@ -37,7 +37,7 @@ pipetaxon start
        
 ## Getting Started (the easy way)
 
-We have packaged pipetaxon as a docker container, you should be able to get it up effortless by simply running the following commands:
+Pipetaxon is also a docker container, you should be able to get it up effortless by simply running the following commands:
 
 ```
 docker pull voorloop/pipetaxon
@@ -47,15 +47,15 @@ docker pull voorloop/pipetaxon
 docker run -p **80**:8000 voorloop/pipetaxon
 ```
 
-if the default HTTP port is already in use or you don't have permission you can simply change it for any other port:
+if the default HTTP port is already in use or you don't have permission you can simply change it to any other port:
  
 ```
-docker run -p **81**:8000 voorloop/pipetaxon
+docker run -p **8888**:8000 voorloop/pipetaxon
 ```
 
-Then go ahead to your browser and type:
+Go to your browser and type:
 
- > `http://localhost` (when you choose port 80) or `http://localhost:81` (or any other port you have chosen)
+ > `http://localhost` (when you choose port 80) or `http://localhost:8888` (or any other port you have chosen)
 
 
 ## Getting Started
