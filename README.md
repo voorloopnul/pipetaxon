@@ -131,8 +131,9 @@ sudo apt-get install python3-venv
 
 ## Adding the accession data (optional)
 
-The accession data is quite large, if you need to get all the data SQLite probably will not handle it very well.
-We have tested `nucl_gb.accession2taxid.gz` with SQLite, the database got 11GB and took one hour to add all the 266 millions of accession IDs in this file.
+The accession data is quite large. If you need all the ids, SQLite might not be able to handle it very well.
+We have tested `nucl_gb.accession2taxid.gz` with SQLite, the database size went to around 11GB and took one hour 
+to create all the 266 millions accession IDs from this file.
 
 
  ```
@@ -151,7 +152,7 @@ We have tested `nucl_gb.accession2taxid.gz` with SQLite, the database got 11GB a
 
 ### Working with different database
 
-SQLITE should suffice for most use cases of standalone execution of pipetaxon, but if you need an full featured RDBMS like
+SQLITE should suffice most use cases of standalone execution of pipetaxon, but if you need a full featured RDBMS like
 postgres or mysql your can easily configure it by changing the database config in settings.py to something like this:
 
 ```
@@ -167,25 +168,23 @@ DATABASES = {
 
 ```
 
-> NOTE: You need the create (or provide) valid credential to access the database. 
-
 ### Using custom lineage
 
 By default all ranks present in NCBI will be part of your newly created taxonomy database, if you want to use a custom lineage
-*(removing ranks that don't aggregate in your project)*, you can easily do that replacing the line `VALID_RANKS = []` to something like:
+*(removing ranks that don't add value to your project)*, you can easily do that by replacing the line `VALID_RANKS = []` to something like:
  
  ```
  VALID_RANKS = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
  ``` 
  
-Keep in mind that you can't change these values after building your database, if you already have one running you first
+Keep in mind that you can't change this settings after building your database, if you already have one pipetaxon instance running, you first
 need to clear it's data
 
 ```
 ./manage.py build_database --clear ~/data/
 ```
 
-Them run again the build process:
+Then you can run again the build process:
 
  ```
  ./manage.py build_database --taxonomy ~/data/ 
